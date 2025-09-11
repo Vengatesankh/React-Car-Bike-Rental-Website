@@ -40,10 +40,22 @@ import car_image1 from "./car_image1.png"
 import car_image2 from "./car_image2.png"
 import car_image3 from "./car_image3.png"
 import car_image4 from "./car_image4.png"
-
-export const cityList = ['New York', 'Los Angeles', 'Houston', 'Chicago']
+import car_banner_main from "./car-banner-main.png"
+import carAndBike from "./carAndBike.png"
+import carBike from "./carBike.png"
+import lastbannerCar from './lastCarbanner.png'
+import royce from "./royce.png"
+export const cityList = ['AG-DMS',"Anna Nagar East","Anna Nagar Tower",
+    "Arignar Anna Alandur","Ashok Nagar","Chennai Internatioal Airport",
+    'Egmore',"Ekkattuthangal","Guindy","Vadapalani"
+];
 
 export const assets = {
+    royce,
+    lastbannerCar,
+    carBike,
+    carAndBike,
+    car_banner_main,
     logo,
     gmail_logo,
     facebook_logo,
