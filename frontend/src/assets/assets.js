@@ -45,6 +45,7 @@ import carAndBike from "./carAndBike.png"
 import carBike from "./carBike.png"
 import lastbannerCar from './lastCarbanner.png'
 import royce from "./royce.png"
+import bike_list from "./bike_list.jpg"
 export const cityList = ['AG-DMS',"Anna Nagar East","Anna Nagar Tower",
     "Arignar Anna Alandur","Ashok Nagar","Chennai Internatioal Airport",
     'Egmore',"Ekkattuthangal","Guindy","Vadapalani"
@@ -97,7 +98,8 @@ export const assets = {
     user_profile,
     car_image2,
     car_image3,
-    car_image4
+    car_image4,
+    bike_list
 }
 
 export const menuLinks = [
@@ -124,17 +126,18 @@ export const dummyUserData = {
 export const dummyCarData = [
     {
         "_id": "67ff5bc069c03d4e45f30b77",
+        "bike_image":bike_list,
         "owner": "67fe3467ed8a8fe17d0ba6e2",
-        "brand": "BMW",
-        "model": "X5",
+        "brand": "Aprilia",
+        "model": "RSV4",
         "image": car_image1,
-        "year": 2006,
-        "category": "SUV",
-        "seating_capacity": 4,
-        "fuel_type": "Hybrid",
-        "transmission": "Semi-Automatic",
+        "year": 2018,
+        "category": "RSV4 RF",
+        "seating_capacity": 2,
+        "fuel_type": "Petrol",
+        "transmission": "Manual",
         "pricePerDay": 300,
-        "location": "New York",
+        "location": "Chennai",
         "description": "The BMW X5 is a mid-size luxury SUV produced by BMW. The X5 made its debut in 1999 as the first SUV ever produced by BMW.",
         "isAvaliable": true,
         "createdAt": "2025-04-16T07:26:56.215Z",
@@ -151,7 +154,7 @@ export const dummyCarData = [
         "fuel_type": "Diesel",
         "transmission": "Manual",
         "pricePerDay": 130,
-        "location": "Chicago",
+        "location": "Madurai",
         "description": "The Toyota Corolla is a mid-size luxury sedan produced by Toyota. The Corolla made its debut in 2008 as the first sedan ever produced by Toyota.",
         "isAvaliable": true,
         "createdAt": "2025-04-16T08:33:57.993Z",
@@ -168,7 +171,7 @@ export const dummyCarData = [
         "fuel_type": "Hybrid",
         "transmission": "Automatic",
         "pricePerDay": 200,
-        "location": "Los Angeles",
+        "location": "Chennai",
         "description": "The Jeep Wrangler is a mid-size luxury SUV produced by Jeep. The Wrangler made its debut in 2003 as the first SUV ever produced by Jeep.",
         "isAvaliable": true,
         "createdAt": "2025-04-16T08:34:39.592Z",

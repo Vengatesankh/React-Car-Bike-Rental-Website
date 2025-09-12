@@ -9,3 +9,7 @@
   --color-light: #c4c7d2;
   --color-borderColor: #c4c7d2;
 }
+
+::-webkit-scrollbar{
+  display: none;
+}
