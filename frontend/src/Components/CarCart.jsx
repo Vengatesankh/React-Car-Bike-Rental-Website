@@ -1,7 +1,7 @@
 import React from "react";
 import { assets } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
-
+import { MdCurrencyRupee } from "react-icons/md";
 const CarCart = ({ car }) => {
   const navigate = useNavigate();
   return (
@@ -22,8 +22,11 @@ const CarCart = ({ car }) => {
             Available Now
           </p>
         )}
-        <div className="absolute bottom-4 right-4 bg-black/80 backdrop-blur-sm text-white px-3 py-2 rounded-lg">
-          <span className="font-medium">${car.pricePerDay}</span>
+        <div className="absolute bottom-4 flex items-center right-4 bg-black/80 backdrop-blur-sm text-white px-3 py-2 rounded-lg">
+          <span className="font-medium flex items-center">
+            <MdCurrencyRupee />
+            {car.pricePerDay}
+          </span>
           <span className="text-sm text-white/80">/ Day</span>
         </div>
         {/* ----bike---- */}

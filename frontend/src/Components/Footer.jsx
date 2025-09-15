@@ -91,7 +91,7 @@ const Footer = () => {
             <a href="#">Privacy</a> <span> | </span>
           </li>
           <li>
-            <a href="#">Terms</a> <span> | </span>
+            <a href="#">Terms</a> <span> | </span>x``
           </li>
           <li>
             <a href="#">Sitemap</a>

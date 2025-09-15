@@ -9,7 +9,7 @@ export const Navbar = () => {
 
   return (
     <nav
-      className={`bg-white shadow-sm border-b border-gray-100 px-4 sm:px-6 lg:px-8 ${
+      className={`bg-white  shadow-sm border-b border-gray-100 px-4 sm:px-6 lg:px-8 ${
         location.pathname === "/" ? "bg-light" : "bg-white"
       }`}
     >
