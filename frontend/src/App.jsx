@@ -7,6 +7,11 @@ import About from "./Pages/MyBookings";
 import MyBookings from "./Pages/MyBookings";
 import CarDetails from "./Pages/CarDetails";
 import Footer from "./Components/Footer";
+import Layout from "./Pages/owner/Layout";
+import Dashboard from "./Pages/owner/Dashboard";
+import { AddCar } from "./Pages/owner/AddCar";
+import ManageCar from "./Pages/owner/ManageCar";
+import ManageBoking from "./Pages/owner/ManageBoking";
 
 const App = () => {
   const [showlogon, setShowlogin] = useState(false);
@@ -20,6 +25,12 @@ const App = () => {
         <Route path="/car-details/:id" element={<CarDetails />}></Route>
         <Route path="/cars" element={<Cars />} />
         <Route path="/mybooking" element={<MyBookings />} />
+        <Route path="/owner" element={<Layout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="add-car" element={<AddCar />} />
+          <Route path="manage-cars" element={<ManageCar />} />
+          <Route path="manage-bookings" element={<ManageBoking />} />
+        </Route>
       </Routes>
       {!isOwnerpath && <Footer />}
     </div>

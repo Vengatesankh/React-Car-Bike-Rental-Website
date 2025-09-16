@@ -16,7 +16,7 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
+          <Link to="/" className="flex-shrink-0" viewTransition>
             <img
               src={assets.logo}
               alt="logo"
@@ -31,18 +31,21 @@ export const Navbar = () => {
               <Link
                 to="/"
                 className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
+                viewTransition
               >
                 HOME
               </Link>
               <Link
                 to="/cars"
                 className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
+                viewTransition
               >
                 CARS
               </Link>
               <Link
                 to="/mybooking"
                 className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
+                viewTransition
               >
                 MY BOOKINGS
               </Link>
