@@ -117,7 +117,7 @@ export const ownerMenuLinks = [
 
 export const dummyUserData = {
   "_id": "6847f7cab3d8daecdb517095",
-  "name": "GreatStack",
+  "name": "Vengates_kh",
   "email": "admin@example.com",
   "role": "owner",
   "image": user_profile,
@@ -173,7 +173,7 @@ export const dummyCarData = [
         "pricePerDay": 200,
         "location": "Chennai",
         "description": "The Jeep Wrangler is a mid-size luxury SUV produced by Jeep. The Wrangler made its debut in 2003 as the first SUV ever produced by Jeep.",
-        "isAvaliable": true,
+        "isAvaliable": false,
         "createdAt": "2025-04-16T08:34:39.592Z",
     },
     {
