@@ -12,12 +12,15 @@ import Dashboard from "./Pages/owner/Dashboard";
 import { AddCar } from "./Pages/owner/AddCar";
 import ManageCar from "./Pages/owner/ManageCar";
 import ManageBoking from "./Pages/owner/ManageBoking";
+import Login from "./Components/Login";
 
 const App = () => {
   const [showlogon, setShowlogin] = useState(false);
   const isOwnerpath = useLocation().pathname.startsWith("/owner");
   return (
     <div>
+      {showlogon && <Login setShowlogin={setShowlogin} />}
+
       {!isOwnerpath && <Navbar setShowlogin={setShowlogin} />}
       {/* <Home /> */}
       <Routes>

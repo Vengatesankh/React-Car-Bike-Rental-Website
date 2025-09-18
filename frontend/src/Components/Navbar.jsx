@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { assets } from "../assets/assets";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-export const Navbar = () => {
+export const Navbar = ({ setShowlogin }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -74,7 +74,10 @@ export const Navbar = () => {
             </button>
 
             {/* Login button */}
-            <button className="px-6 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg font-medium cursor-pointer">
+            <button
+              onClick={() => setShowlogin(true)}
+              className="px-6 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg font-medium cursor-pointer"
+            >
               Login
             </button>
           </div>
@@ -155,7 +158,10 @@ export const Navbar = () => {
                   </button>
 
                   {/* Mobile Login button */}
-                  <button className="block w-full text-center py-3 px-4 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg font-medium">
+                  <button
+                    onClick={() => setShowlogin(true)}
+                    className="block w-full text-center py-3 px-4 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg font-medium"
+                  >
                     Login
                   </button>
                 </div>
