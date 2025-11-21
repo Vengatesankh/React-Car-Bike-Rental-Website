@@ -1,11 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { assets, dummyCarData, dummyMyBookingsData } from "../../assets/assets";
+import { assets, dummyCarData } from "../../assets/assets";
 import Title from "../../Components/owner/Title";
-import { MdCurrencyRupee } from "react-icons/md";
+
+import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 const ManageBoking = () => {
+  const { currency, axios } = useAppContext();
+
   const [booking, setBooking] = useState([]);
+  //fetch booking data
   const fetchOwnerBooking = async () => {
-    setBooking(dummyMyBookingsData);
+    try {
+      const { data } = await axios.get("/api/booking/owner");
+      data.success ? setBooking(data.bookings) : toast.error(data.message);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+  //change booking status
+  const changeBookingStatus = async (bookingId, status) => {
+    try {
+      const { data } = await axios.post("/api/booking/change-status", {
+        bookingId,
+        status,
+      });
+      if (data.success) {
+        toast.success(data.message);
+        fetchOwnerBooking();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {}
   };
   useEffect(() => {
     fetchOwnerBooking();
@@ -50,7 +75,7 @@ const ManageBoking = () => {
                 </td>
                 <td className="p-3 ">
                   <p className="flex items-center">
-                    <MdCurrencyRupee /> {data.price}
+                    {currency} {data.price}
                   </p>
                 </td>
                 <td className="p-3 max-md:hidden">
@@ -61,6 +86,9 @@ const ManageBoking = () => {
                 <td className="p-3">
                   {data.status === "pending" ? (
                     <select
+                      onChange={(e) =>
+                        changeBookingStatus(data._id, e.target.value)
+                      }
                       value={data.status}
                       className="px-2 py-1.5 mt-1 text-gray-600 border border-borderColor rounded-md outline-none"
                     >

@@ -1,15 +1,64 @@
 import React, { useEffect, useState } from "react";
-import { assets, dummyCarData } from "../../assets/assets";
+import { assets } from "../../assets/assets";
 import Title from "../../Components/owner/Title";
-import { MdCurrencyRupee } from "react-icons/md";
+
+import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 const ManageCar = () => {
+  const { isOwner, axios, currency } = useAppContext();
   const [cars, setCars] = useState([]);
+
+  //fetch car
   const fetchOwnerCars = async () => {
-    setCars(dummyCarData);
+    try {
+      const { data } = await axios.get("/api/owner/cars");
+      if (data.success) {
+        setCars(data.cars);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  //change the car availabilitys
+  const toggleAvailability = async (carId) => {
+    try {
+      const { data } = await axios.post("/api/owner/toggle-car", { carId });
+      if (data.success) {
+        toast.success(data.message);
+        fetchOwnerCars();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  //delete the car
+  const deleteCar = async (carId) => {
+    try {
+      const confirm = window.confirm(
+        "Are your sure you want to delete this car?"
+      );
+      if (!confirm) return null;
+
+      const { data } = await axios.post("/api/owner/delete-car", { carId });
+      if (data.success) {
+        toast.success(data.message);
+        fetchOwnerCars();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
   useEffect(() => {
-    fetchOwnerCars();
-  }, []);
+    isOwner && fetchOwnerCars();
+  }, [isOwner]);
   return (
     <div className="px-4 pt-10 md:px-10 w-full">
       <Title
@@ -49,30 +98,32 @@ const ManageCar = () => {
                 <td className="p-3 max-md:hidden">{data.category}</td>
                 <td className="p-3">
                   <p className="flex items-center">
-                    <MdCurrencyRupee />
+                    {currency}
                     {data.pricePerDay}/day
                   </p>
                 </td>
                 <td className="p-3 max-md:hidden">
                   <span
                     className={`px-3 py-1 rounded-full text-xs ${
-                      data.isAvaliable
+                      data.isAvailable
                         ? "bg-green-200 text-green-700"
                         : "bg-red-300 text-red-700"
                     }`}
                   >
-                    {data.isAvaliable ? "Available" : "Unavailable"}
+                    {data.isAvailable ? "Available" : "Unavailable"}
                   </span>
                 </td>
                 <td className="flex items-center p-3">
                   <img
+                    onClick={() => toggleAvailability(data._id)}
                     src={
-                      data.isAvaliable ? assets.eye_close_icon : assets.eye_icon
+                      data.isAvailable ? assets.eye_close_icon : assets.eye_icon
                     }
                     alt=""
                     className="cursor-pointer"
                   />
                   <img
+                    onClick={() => deleteCar(data._id)}
                     src={assets.delete_icon}
                     alt=""
                     className="cursor-pointer"

@@ -1,13 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../context/AppContext";
+import toast from "react-hot-toast";
 
-const Login = ({ setShowlogin }) => {
-  const [state, setState] = React.useState("login");
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+const Login = () => {
+  const { setShowlogin, axios, setToken, navigate } = useAppContext();
+  const [state, setState] = useState("login");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const onSubmitHandler = async (event) => {
-    event.preventDefault();
+    try {
+      event.preventDefault();
+      const { data } = await axios.post(`/api/user/${state}`, {
+        name,
+        email,
+        password,
+      });
+      if (data.success) {
+        navigate("/");
+        setToken(data.token);
+        localStorage.setItem("token", data.token);
+        setShowlogin(false);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
+
+  const LoginUser = () => {
+    console.log("User Logged In");
+    setShowlogin(false);
+  };
+
   return (
     <div
       onClick={() => setShowlogin(false)}
@@ -22,6 +50,7 @@ const Login = ({ setShowlogin }) => {
           <span className="text-indigo-500">User</span>{" "}
           {state === "login" ? "Login" : "Sign Up"}
         </p>
+
         {state === "register" && (
           <div className="w-full">
             <p>Name</p>
@@ -31,11 +60,11 @@ const Login = ({ setShowlogin }) => {
               placeholder="type here"
               className="border border-gray-200 rounded w-full p-2 mt-1 outline-indigo-500"
               type="text"
-              required
             />
           </div>
         )}
-        <div className="w-full ">
+
+        <div className="w-full">
           <p>Email</p>
           <input
             onChange={(e) => setEmail(e.target.value)}
@@ -43,10 +72,10 @@ const Login = ({ setShowlogin }) => {
             placeholder="type here"
             className="border border-gray-200 rounded w-full p-2 mt-1 outline-indigo-500"
             type="email"
-            required
           />
         </div>
-        <div className="w-full ">
+
+        <div className="w-full">
           <p>Password</p>
           <input
             onChange={(e) => setPassword(e.target.value)}
@@ -54,20 +83,10 @@ const Login = ({ setShowlogin }) => {
             placeholder="type here"
             className="border border-gray-200 rounded w-full p-2 mt-1 outline-indigo-500"
             type="password"
-            required
           />
         </div>
-        {state === "register" ? (
-          <p>
-            Already have account?{" "}
-            <span
-              onClick={() => setState("login")}
-              className="text-indigo-500 cursor-pointer"
-            >
-              click here
-            </span>
-          </p>
-        ) : (
+
+        {state === "login" ? (
           <p>
             Create an account?{" "}
             <span
@@ -77,8 +96,23 @@ const Login = ({ setShowlogin }) => {
               click here
             </span>
           </p>
+        ) : (
+          <p>
+            Already have an account?{" "}
+            <span
+              onClick={() => setState("login")}
+              className="text-indigo-500 cursor-pointer"
+            >
+              click here
+            </span>
+          </p>
         )}
-        <button className="bg-indigo-500 hover:bg-indigo-600 transition-all text-white w-full py-2 rounded-md cursor-pointer">
+
+        <button
+          // onClick={LoginUser}
+          type="submit"
+          className="bg-indigo-500 hover:bg-indigo-600 transition-all text-white w-full py-2 rounded-md cursor-pointer"
+        >
           {state === "register" ? "Create Account" : "Login"}
         </button>
       </form>

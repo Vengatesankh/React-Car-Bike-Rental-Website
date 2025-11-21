@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { assets, dummyDashboardData } from "../../assets/assets";
 import Title from "../../Components/owner/Title";
-import { MdCurrencyRupee } from "react-icons/md";
+
+import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 const Dashboard = () => {
+  const { axios, isOwner, currency } = useAppContext();
   const [data, setData] = useState({
-    totalVechiles: 0,
+    totalCars: 0,
     totalBookings: 0,
     pendingBookings: 0,
     completedBookings: 0,
@@ -14,7 +17,7 @@ const Dashboard = () => {
   const dashboardCards = [
     {
       title: "Total Cars and Bikes",
-      value: data.totalVechiles,
+      value: data.totalCars,
       icon: assets.carIconColored,
     },
     {
@@ -33,9 +36,24 @@ const Dashboard = () => {
       icon: assets.listIconColored,
     },
   ];
+
+  const fetchDashboardData = async () => {
+    try {
+      const { data } = await axios.get("/api/owner/dashboard");
+      if (data.success) {
+        setData(data.dashboardData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   useEffect(() => {
-    setData(dummyDashboardData);
-  }, []);
+    if (isOwner) {
+      fetchDashboardData();
+    }
+  }, [isOwner]);
   return (
     <div className="px-4 pt-10 md:px-10 flex-1">
       <Title
@@ -89,7 +107,7 @@ const Dashboard = () => {
               </div>
               <div className="flex items-center gap-2 font-medium">
                 <p className="flex items-center text-sm ">
-                  <MdCurrencyRupee />
+                  {currency}
                   {booking.price}
                 </p>
                 <p className="px-3 py-0.5 border border-borderColor rounded-full text-sm text-gray-600">
@@ -104,7 +122,8 @@ const Dashboard = () => {
           <h1 className="text-lg font-medium">Monthly Revenue</h1>
           <p className="text-gray-500">Revenue For Current Month</p>
           <p className="flex items-center text-3xl mt-6 font-medium text-primary">
-            <MdCurrencyRupee /> {data.monthlyRevenue}
+            {currency}
+            {data.monthlyRevenue}
           </p>
         </div>
       </div>

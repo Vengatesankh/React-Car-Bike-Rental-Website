@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { assets, dummyMyBookingsData } from "../assets/assets";
+import { assets } from "../assets/assets";
 import Title from "../Components/Title";
-import { MdCurrencyRupee } from "react-icons/md";
+
+import { useAppContext } from "../context/AppContext";
+import toast from "react-hot-toast";
 const MyBookings = () => {
+  const { currency, axios, user } = useAppContext();
   const [booking, setBooking] = useState([]);
 
   const fetchmyBooking = async () => {
-    setBooking(dummyMyBookingsData);
+    try {
+      const { data } = await axios.get("/api/booking/user");
+      if (data.success) {
+        setBooking(data.bookings);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
   useEffect(() => {
-    fetchmyBooking();
-  }, []);
+    user && fetchmyBooking();
+  }, [user]);
   return (
     <div className="px-6 md:px-16 lg:px-24 xl:px-32 2xl:px-48 mt-16 text-sm max-w-7xl">
       <Title
@@ -102,9 +114,7 @@ const MyBookings = () => {
                 <p className="font-medium">Total Price</p>
 
                 <h1 className="flex items-center justify-end text-2xl font-bold text-gray-800">
-                  <span className="mr-1">
-                    <MdCurrencyRupee className="w-5 h-5" />
-                  </span>
+                  <span className="mr-1">{currency}</span>
                   {booking.price}
                 </h1>
 

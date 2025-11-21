@@ -1,10 +1,26 @@
 import React, { useState } from "react";
 import { assets, cityList } from "../assets/assets";
+import { useAppContext } from "../context/AppContext";
 
 const Hero = () => {
   const [pickupLocation, setPickupLocation] = useState("");
-  const [pickupDate, setPickupDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
+  // const [pickupDate, setPickupDate] = useState("");
+  // const [returnDate, setReturnDate] = useState("");
+
+  const { pickupDate, setPicupDate, returnDate, setReturnDate, navigate } =
+    useAppContext();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate(
+      "/cars?pickupLocation=" +
+        pickupLocation +
+        "&pickupDate=" +
+        pickupDate +
+        "&returnDate=" +
+        returnDate
+    );
+  };
 
   return (
     <div className="min-h-screen relative flex items-center justify-center px-4 py-12 md:py-20 overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50">
@@ -34,7 +50,7 @@ const Hero = () => {
 
         {/* Search Form */}
         <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-3xl p-6 md:p-8 shadow-xl shadow-blue-100/30 mb-12">
-          <form className="space-y-6 md:space-y-0">
+          <form onSubmit={handleSearch} className="space-y-6 md:space-y-0">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-4 items-end">
               {/* Pickup Location */}
               <div className="text-left space-y-3">
@@ -132,7 +148,7 @@ const Hero = () => {
                     type="date"
                     id="picup-date"
                     value={pickupDate}
-                    onChange={(e) => setPickupDate(e.target.value)}
+                    onChange={(e) => setPicupDate(e.target.value)}
                     min={new Date().toISOString().split("T")[0]}
                     className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-700 text-base
                              focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300

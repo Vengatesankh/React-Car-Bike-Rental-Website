@@ -1,13 +1,30 @@
 import React, { useState } from "react";
 import { assets } from "../assets/assets";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { data, Link, useLocation, useNavigate } from "react-router-dom";
+import { useAppContext } from "../context/AppContext";
+import toast from "react-hot-toast";
 
-export const Navbar = ({ setShowlogin }) => {
+export const Navbar = () => {
+  const { setShowlogin, user, logout, isOwner, axios, setIsOwner } =
+    useAppContext();
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const changeRole = async () => {
+    try {
+      const { data } = await axios.post("/api/owner/changerole");
+      if (data.success) {
+        setIsOwner(true);
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(data.message);
+    }
+  };
   return (
     <nav
       className={`sticky top-0 z-50 backdrop-blur-lg bg-white/95 border-b transition-all duration-300 ${
@@ -93,18 +110,18 @@ export const Navbar = ({ setShowlogin }) => {
 
             {/* Dashboard button */}
             <button
-              onClick={() => navigate("/owner")}
+              onClick={() => (isOwner ? navigate("/owner") : changeRole())}
               className="text-gray-700 hover:text-blue-600 font-semibold transition-all duration-300 px-4 py-2 rounded-lg hover:bg-gray-50"
             >
-              Dashboard
+              {isOwner ? "Dashboard" : "List cars"}
             </button>
-
-            {/* Login button */}
             <button
-              onClick={() => setShowlogin(true)}
+              onClick={() => {
+                user ? logout() : setShowlogin(true);
+              }}
               className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-200 cursor-pointer"
             >
-              Login
+              {user ? "Logout" : "Login"}
             </button>
           </div>
 
